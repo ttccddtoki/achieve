@@ -49,3 +49,6 @@ gem 'twitter-bootstrap-rails'
 gem 'jquery-turbolinks'
 gem 'devise'
 gem 'faker'
+group :development do
+  gem 'letter_opener'
+end
