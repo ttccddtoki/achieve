@@ -6,6 +6,12 @@
   <%= f.error_messages! %>
 
   <div class="field">
+    <%= profile_img(@user) if profile_img(@user) %>
+    <%= f.file_field :avatar %>
+    <%= f.hidden_field :avatar_cache %>
+  </div>
+
+  <div class="field">
     <%= f.label :メールアドレス %><br />
     <%= f.email_field :email, autofocus: true, class: "form-control" %>
   </div>
@@ -19,6 +25,7 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
+<% if @user.provider.blank? %>
   <div class="field">
     <%= f.label :password %> <i>(空白はダメ)</i><br />
     <%= f.password_field :password, autocomplete: "off" %>
@@ -37,11 +44,13 @@
     <%= f.label :current_password %> <br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
+  <% end %>
 
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
+
 
 <h3>アカウント削除</h3>
 
