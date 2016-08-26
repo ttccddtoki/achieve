@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
           image_url: auth.info.image,
           provider: auth.provider,
           uid:      auth.uid,
-          email:    auth.info.email ||= "#{auth.uid}-#{auth.provider}@example.com",
+          email:    auth.info.email || "#{auth.uid}-#{auth.provider}@example.com",
           password: Devise.friendly_token[0, 20],
       )
       user.skip_confirmation!
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
   end
 
   def self.create_unique_string
-    SecureRandam.uuid
+    SecureRandom.uuid
   end
 
   def update_with_password(params, *options)
