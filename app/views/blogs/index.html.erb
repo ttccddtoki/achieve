@@ -13,7 +13,7 @@
 </div>
     <% @blogs.each do |blog| %>
     <div style="text-align:left;">
-      <p><%= image_tag(blog.user.avatar) %><%= blog.user.name%>が投稿しました</p>
+      <p><%= profile_img(blog.user) %><%= blog.user.name%>が投稿しました</p>
 
     <div class="row">
       <h4><strong><%= blog.title %></strong></h4>
