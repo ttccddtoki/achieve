@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
     user = User.where(provider: auth.provider, uid: auth.uid).first
 
     unless user
-      user = User.create(
+      user = User.new(
           name:     auth.extra.raw_info.name,
           provider: auth.provider,
           uid:      auth.uid,
@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
           image_url:   auth.info.image,
           password: Devise.friendly_token[0, 20]
       )
-#      user.skip_confirmation!
-#      user.save(validate: false)
+user.skip_confirmation!
+  user.save(validate: false)
     end
     user
   end
