@@ -1,10 +1,13 @@
 class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
+  has_many :blogs, dependent: :destroy
+         # CommentモデルのAssociationを設定
+  has_many :comments, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :omniauthable
-  has_many :blogs
+  
 
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
     user = User.where(provider: auth.provider, uid: auth.uid).first
