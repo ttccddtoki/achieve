@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
+  }
+  get 'relationships/create'
+
+  get 'relationships/destroy'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :blogs do
   resources :comments
-
   collection do
     post :confirm
   end
@@ -19,6 +25,9 @@ end
   get 'contacts/new' => 'contacts#index'
 
   root 'top#index'
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -73,8 +82,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  devise_for :users, controllers: {
-    registrations: "users/registrations",
-    omniauth_callbacks: "users/omniauth_callbacks"
-  }
+  resources :users, only: [:index, :show]
+  resources :relationships, only: [:create, :destroy]
+
 end
