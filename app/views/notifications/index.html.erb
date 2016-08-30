@@ -1,0 +1,16 @@
+<h2>お知らせ</h2>
+<% @notifications_count = 0 %>
+<ul>
+  <% @notifications.each do |notification| %>
+  <hr>
+    <li>
+      <span><%= notification.read %></span>
+      <p>
+        <%= notification.comment.user.try(:name) %>さんが
+        あなたのブログ（<%= notification.comment.blog.title %>）にコメントしました。
+      </p>
+      <p><%= link_to 'コメントを見る', blog_path(notification.user_id) %></p>
+      <p><%= notification.created_at %></p>
+    </li>
+  <% end %>
+</ul>

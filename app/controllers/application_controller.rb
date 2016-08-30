@@ -1,4 +1,11 @@
 class ApplicationController < ActionController::Base
+  before_action :current_notifications
+
+def current_notifications
+  if user_signed_in?
+ @notifications_count = Notification.where(user_id: current_user.id).where(read: false).count
+end
+end
   rescue_from CanCan::AccessDenied do |exception|
   redirect_to main_app.root_url, :alert => exception.message
 end
@@ -9,6 +16,7 @@ end
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   PERMISSIBLE_ATTRIBUTES = %i(name avatar avatar_cache)
+
 
   private
 

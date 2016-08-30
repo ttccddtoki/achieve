@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     omniauth_callbacks: "users/omniauth_callbacks"
   }
 root 'top#index'
-
+get 'notifications/index'
 
 
 resources :users, only: [:index, :show, :edit, :update] do
@@ -42,7 +42,9 @@ end
   end
   get 'contacts/new' => 'contacts#index'
 
-
+  resources :conversations do
+    resources :messages
+  end
 
 
 

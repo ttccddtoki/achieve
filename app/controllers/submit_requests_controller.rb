@@ -5,7 +5,7 @@ class SubmitRequestsController < ApplicationController
 
   def index
   @submit_requests = SubmitRequest.where(user_id: current_user.id).order(updated_at: :desc)
-  
+
 end
 
 def new
@@ -16,7 +16,7 @@ def new
   # フォーム送信用に取得
   @user = current_user
   # リクエスト新規作成用
-  @submit_request = current_user.submit_request.build(status: 1)
+  @submit_request = current_user.submit_requests.build(status: 1)
 end
 
 def create
