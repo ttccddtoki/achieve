@@ -1,15 +1,32 @@
 Rails.application.routes.draw do
 
-  resources :tasks
+
+
   devise_for :users, controllers: {
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
+root 'top#index'
+
+
+
+resources :users, only: [:index, :show, :edit, :update] do
+    resources :tasks
+    resources :submit_requests , shallow: true do
+      get 'approve'
+      get 'unapprove'
+      get 'reject'
+      collection do
+        get 'inbox'
+      end
+    end
+  end
   get 'relationships/create'
 
   get 'relationships/destroy'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+
   resources :blogs do
   resources :comments
   collection do
@@ -25,7 +42,7 @@ end
   end
   get 'contacts/new' => 'contacts#index'
 
-  root 'top#index'
+
 
 
 
@@ -83,9 +100,7 @@ end
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  resources :users, only: [:index, :show, :edit, :update] do
-  resources :tasks
-end
+
   resources :relationships, only: [:create, :destroy]
 
 end
